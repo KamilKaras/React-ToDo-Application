@@ -1,0 +1,203 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    font-family: inherit;
+  }
+.menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #f3efec;
+  flex:1;
+  width: 100%;
+}
+.menu h1{
+  margin: 1rem 1rem;
+}
+.image{
+  height: 100px;
+  width: 90px;
+  background: url('C:/Kamil/Kurs_IT/Zajecia_5/Zadania/ToDoList/React/my-app/src/components/pictures/toDoListPic.png') 40% 40% no-repeat;
+  border-radius: 50%; 
+  margin-top: 3rem;
+  margin-left: 1rem;
+}
+.button-add-user{
+    font-weight: bold;
+    background-color: #13d326;
+    border-radius: 10px;
+    padding: 0.7rem;
+    color: white;               
+    margin-top: 1rem;
+}
+.button-add-user:hover,.button-menu:hover, .user:hover, .button-delete-user, .button-accept:hover{
+  cursor: pointer;
+}
+.menu-list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10rem;
+}
+.button-menu{
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+.user-list{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 5rem;
+  flex:5;
+  width: 100%;
+}
+.user-list h1{
+  font-size: 3rem;
+  border-bottom: solid grey;
+}
+.one-user{
+  margin: 0.5rem 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border:solid silver;
+  border-radius: 5px;
+  flex-wrap: wrap;
+}
+.avatar{
+  height: 60px;
+  width: 60px;
+  background: url('C:/Kamil/Kurs_IT/Zajecia_5/Zadania/ToDoList/React/my-app/src/components/pictures/avatar.png') center no-repeat;
+  border-radius: 50%; 
+}
+.user{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex:1;
+}
+.account{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 2;
+}
+.user-data{
+  margin: 0 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.user-title{
+  color: grey;
+  opacity: 0.7;
+  font-size: 0.6rem;
+  margin: 0 0;
+}
+.user-value{
+  margin: 0.5rem 0;
+}
+.user-value-status{
+  margin: 0.5rem 0;
+  color:red;
+}
+
+.button-delete-user, .button-accept{
+  font-weight: 750;
+  background-color: #13d326;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+.new-user-off{
+  display: none;
+}
+.new-user-on{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.input{
+  color: black;
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0.5rem;
+}
+
+
+
+
+
+.to-do-list{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    border-radius: 15px;
+    flex:5;
+}
+.new-task{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.tasks{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.one-task{
+    font-weight: 700;
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border:solid silver;
+    border-radius: 5px;
+    flex-wrap: wrap;
+}
+
+  .delete-all-button{
+    font-weight: 750;
+    background-color: burlywood;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 40%;
+    align-self: center;
+  }
+
+  .Add-user{
+    display: flex;
+    flex-direction: row;
+    background-color: darkcyan;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 400px;
+    width: 100%;
+    margin: 1rem 0;
+  
+  }
+  .Select-user{
+    min-width: 400px;
+    background: black;
+    color: white;
+    min-height: 30px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+  }
