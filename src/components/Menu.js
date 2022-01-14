@@ -6,7 +6,6 @@ class Menu extends React.Component{
         
         this.state={
             newUserVisi:"new-user-off",
-            userList:this.props.userList,
             visible:1,
             newName:"",
             newPassword:"",
@@ -21,7 +20,7 @@ class Menu extends React.Component{
                 <div>
                     <div className="image"></div>
                     <h1>To Do Aplication</h1>
-                    <button className="button-add-user" onClick={this.ChangeVisibility.bind(this)}>Create new user</button>
+                    <button className="button" onClick={this.ChangeVisibility.bind(this)}>Create new user</button>
                 </div>
                 <div className={this.state.newUserVisi}>
                     <input
@@ -52,10 +51,10 @@ class Menu extends React.Component{
                     value={this.state.passwordRepeat}
                     onChange={event=>this.InputUpdate("passwordRepeat",event.target.value)}
                     />
-                    <button className="button-accept" onClick={this.AddUser.bind(this)}>Accept</button>
+                    <button className="button" onClick={this.AddUser.bind(this)}>Accept</button>
                 </div>
                 <div className="menu-list">
-                    <button className="button-menu">User List</button>
+                    <button className="button-menu" onClick={() => this.props.showUsers(true)}>User List</button>
                     <button className="button-menu">Calendar</button>
                     <button className="button-menu">Tasks</button>
                 </div>
@@ -89,16 +88,16 @@ class Menu extends React.Component{
         else{
             const isCorrect = this.PasswordCheck(this.state.newPassword, this.state.passwordRepeat)
             if(isCorrect){
-                this.createUser(this.state.userList)
-                this.props.parentCallback(this.state.userList)
+                const newUser = this.createUser();
+                this.props.parentCallback(newUser);
+                this.ChangeVisibility();
                 this.setState({
-                    newUserVisi:"new-user-off",
                     newName:"",
                     accountName:"",
                     newPassword:"",
                     passwordRepeat:"",
                     isCorrect: false
-                })
+                });
             }
         }
     }
@@ -119,9 +118,9 @@ class Menu extends React.Component{
             }
         }
     }
-    createUser(userList){
+    createUser(){
         const newUser={
-            id:this.props.userList.length +1,
+            id: Math.random()+1,
             name:this.state.newName,
             password:this.state.newPassword,
             accountName:this.state.accountName,
@@ -130,7 +129,7 @@ class Menu extends React.Component{
             modify:this.GetData(),
             status:"offline"
             }
-        userList.push(newUser)
+        return newUser;
     }
     GetData(){
         const newData = new Date();

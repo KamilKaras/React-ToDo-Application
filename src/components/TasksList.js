@@ -1,76 +1,78 @@
 import React from "react";
-import ToDoTask from "./ToDoTask";
+import ToDoItem from "./ToDoItem"
 
 class ToDoList extends React.Component {
     constructor(props){
     super(props)
   
       this.state={
-        
+        newTask:"",
+        tasks:this.props.user.tasks,
       }
     }
     render(){
       return (
           <div className="to-do-list">
-            <h1>My ToDoList</h1>
+            <h1>{this.props.user.name} Tasks</h1>
               <div className="new-task">
                 <input
                   type="text"
                   placeholder='Add new task'
-                  className="input"
+                  className="input-task"
                   value = {this.state.newTask}
-                  onChange={this.inputUpdate.bind(this)}
+                  onChange={event => this.InputUpdate("newTask",event.target.value)}
                 />
-                <button className="button" onClick={this.addNewTask.bind(this)}>Add task</button>
+                <button className="button" onClick={this.AddNewTask.bind(this)}>Add task</button>
               </div>
               <div className="tasks">
-                {this.state.userList.map(user =>{
+                {this.state.tasks.map(task =>{
                   return(
-                    <ToDoTask element = {user}/> 
+                    <ToDoItem task = {task} key={task.id} deleteItem={this.DeleteItem.bind(this)}/>
                   )
                 })}
               </div>
-              <button className="delete-all-button" onClick={this.deleteAll.bind(this)}>Delete all</button>
           </div>
       );
     }
 
-    inputUpdate(event){
-      const newValue = event.target.value
+    InputUpdate(key,value){
       this.setState({
-        newTask: newValue
+        [key]: value
       })
     }
-
-    addNewTask(){
+    AddNewTask(){
       if(this.state.newTask === ""){
-        alert("Write something in input field")
+        alert("Write something in input field");
       }
       else{
-        //this.userToAddTask = this.userList.filter(user => user.name = 'Kamil')
-        const userToAdd = this.state.userList.filter(user => user.name === 'Kamil');
         const newTask = {
           id: 1 + Math.random(),
-          task: this.state.newTask
+          desc: this.state.newTask
         };
-        userToAdd.map(user => user.tasks.push(newTask));
-        console.log(this.state.userList);
+        this.props.user.tasks.push(newTask);
+        this.Modify();
         this.setState({
           newTask: ""
         })
       }
     }
-    
-    deleteAll(){
-      if(this.state.userList.length<=0){
-        alert("You don't have any tasks")
-      }
-      else{
-        this.setState({
-          userList: []
-        })
-      }
+    DeleteItem(itemId){
+      const list = [...this.props.user.tasks];
+      const filtredTasksList = list.filter(task => task.id !== itemId);
+      this.setState({
+        tasks:filtredTasksList
+      })
+      this.props.user.tasks = filtredTasksList;
+      this.Modify();
     }
+    Modify(){
+      const newData = new Date();
+      const actualMonth = (newData.getMonth()+1).toString().padStart(2,"0")
+      const actualDay = newData.getDate()
+      const actualHour = newData.getHours()
+      const actualMin = newData.getMinutes()
+      this.props.user.modify = actualDay+"."+actualMonth+ ", " + actualHour+":"+actualMin;
+  }
 }
 
 export default ToDoList;

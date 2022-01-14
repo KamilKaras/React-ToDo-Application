@@ -2,13 +2,6 @@ import React from "react";
 import NewUser from "./NewUser";
 
 class UserList extends React.Component{
-    constructor(props){
-        super(props)
-
-        this.state={
-            userList:this.props.userList
-        }
-    }
 
     render(){
         return(
@@ -18,16 +11,21 @@ class UserList extends React.Component{
                     return(
                         <NewUser key={user.id}
                          user={user}
-                         deleteUser = {this.deleteUser.bind(this)}
-                         className="test"/>
+                         deleteUser = {this.DeleteUser.bind(this)}
+                         whoIsLogged = {this.WhoIsLogged.bind(this)}
+                         />
                     )
                 })}
             </div>
         )
     }
-    deleteUser(userId){
+    DeleteUser(userId){
         const refreshList = this.props.userList.filter(user => user.id !== userId)
         this.props.parentCallback(refreshList)
+    }
+    WhoIsLogged(logged){
+        const showList = false;
+        this.props.parentCallbackWhoLogged(logged,showList)
     }
 }
 

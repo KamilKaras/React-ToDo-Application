@@ -20,7 +20,7 @@
 .image{
   height: 100px;
   width: 90px;
-  background: url('C:/Kamil/Kurs_IT/Zajecia_5/Zadania/ToDoList/React/my-app/src/components/pictures/toDoListPic.png') 40% 40% no-repeat;
+  background: url('C:/Kamil/Kurs_IT/Zajecia_8/Zadania/React/Full-Stack-ToDo-Aplication/src/components/pictures/toDoListPic.png') 40% 40% no-repeat;
   border-radius: 50%; 
   margin-top: 3rem;
   margin-left: 1rem;
@@ -33,7 +33,7 @@
     color: white;               
     margin-top: 1rem;
 }
-.button-add-user:hover,.button-menu:hover, .user:hover, .button-delete-user, .button-accept:hover{
+.button:hover,.button-menu:hover, .user-open:hover{
   cursor: pointer;
 }
 .menu-list{
@@ -56,7 +56,7 @@
   flex:5;
   width: 100%;
 }
-.user-list h1{
+.user-list h1, .to-do-list h1{
   font-size: 3rem;
   border-bottom: solid grey;
 }
@@ -74,10 +74,10 @@
 .avatar{
   height: 60px;
   width: 60px;
-  background: url('C:/Kamil/Kurs_IT/Zajecia_5/Zadania/ToDoList/React/my-app/src/components/pictures/avatar.png') center no-repeat;
+  background: url('C:/Kamil/Kurs_IT/Zajecia_8/Zadania/React/Full-Stack-ToDo-Aplication/src/components/pictures/avatar.png') center no-repeat;
   border-radius: 50%; 
 }
-.user{
+.user, .user-open{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -108,7 +108,7 @@
   color:red;
 }
 
-.button-delete-user, .button-accept{
+.button{
   font-weight: 750;
   background-color: #13d326;
   border-radius: 10px;
@@ -132,10 +132,6 @@
   margin: 0.5rem;
 }
 
-
-
-
-
 .to-do-list{
     display: flex;
     flex-direction: column;
@@ -149,6 +145,14 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+}
+.input-task{
+  color: black;
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0.5rem;
+  min-width: 20%;
 }
 .tasks{
     margin-top: 20px;
@@ -165,39 +169,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     border:solid silver;
     border-radius: 5px;
     flex-wrap: wrap;
 }
 
-  .delete-all-button{
+.delete-all-button{
     font-weight: 750;
-    background-color: burlywood;
+    background-color: #13d326;
     border-radius: 10px;
     padding: 10px;
     margin-top: 10px;
     width: 40%;
     align-self: center;
-  }
-
-  .Add-user{
-    display: flex;
-    flex-direction: row;
-    background-color: darkcyan;
-    border-radius: 15px;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 400px;
-    width: 100%;
-    margin: 1rem 0;
-  
-  }
-  .Select-user{
-    min-width: 400px;
-    background: black;
-    color: white;
-    min-height: 30px;
-    padding: 0.5rem;
-    border-radius: 1rem;
   }
