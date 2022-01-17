@@ -5,12 +5,13 @@ class Menu extends React.Component{
         super(props)
         
         this.state={
-            newUserVisi:"new-user-off",
+            newUserVisi:"off",
             visible:1,
             newName:"",
             newPassword:"",
             passwordRepeat:"",
-            accountName:"",
+            email:"",
+            userToVisible:0
         }
     }
 
@@ -31,11 +32,12 @@ class Menu extends React.Component{
                     onChange={event=>this.InputUpdate("newName",event.target.value)}
                     />
                     <input
-                    type="text"
-                    placeholder='Account name'
+                    type="email"
+                    name="email"
+                    placeholder='Email'
                     className="input"
-                    value={this.state.accountName}
-                    onChange={event=>this.InputUpdate("accountName",event.target.value)}
+                    value={this.state.email}
+                    onChange={event=>this.InputUpdate("email",event.target.value)}
                     />
                     <input
                     type="password"
@@ -71,7 +73,7 @@ class Menu extends React.Component{
         }
         else{
             this.setState({
-                newUserVisi:"new-user-off",
+                newUserVisi:"off",
                 visible:1
             })
         }
@@ -82,18 +84,22 @@ class Menu extends React.Component{
         })
     }
     AddUser(){
-        if(this.state.newName === "" || this.state.accountName === ""){
-            alert("Please enter the name and account name!")
+        if(this.state.newName === "" || this.state.email === ""){
+            alert("Please enter the name and email!")
+        }
+        else if(!this.state.email.includes("@")){
+            alert("Adress email needs to have '@'")
         }
         else{
             const isCorrect = this.PasswordCheck(this.state.newPassword, this.state.passwordRepeat)
             if(isCorrect){
                 const newUser = this.createUser();
                 this.props.parentCallback(newUser);
-                this.ChangeVisibility();
+                this.ChangeVisibility("new-user-on");
+
                 this.setState({
                     newName:"",
-                    accountName:"",
+                    email:"",
                     newPassword:"",
                     passwordRepeat:"",
                     isCorrect: false
@@ -113,8 +119,7 @@ class Menu extends React.Component{
                 alert("First letter needs to be capital")
             }
             else{
-                const valid = true;
-                return valid;
+                return true;
             }
         }
     }
@@ -123,7 +128,7 @@ class Menu extends React.Component{
             id: Math.random()+1,
             name:this.state.newName,
             password:this.state.newPassword,
-            accountName:this.state.accountName,
+            email:this.state.email.toLocaleLowerCase(),
             tasks:[],
             created:this.GetData(),
             modify:this.GetData(),

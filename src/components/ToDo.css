@@ -41,6 +41,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 10rem;
+  flex:3;
 }
 .button-menu{
   background: transparent;
@@ -96,7 +97,6 @@
 }
 .user-title{
   color: grey;
-  opacity: 0.7;
   font-size: 0.6rem;
   margin: 0 0;
 }
@@ -115,7 +115,7 @@
   padding: 10px;
   color: white;
 }
-.new-user-off{
+.off{
   display: none;
 }
 .new-user-on{
@@ -184,3 +184,41 @@
     width: 40%;
     align-self: center;
   }
+.button-admin{
+  font-weight: 750;
+  background-color: #13d326;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  margin-bottom: 1rem;
+}
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup-inner{
+  position:relative;
+  padding: 3rem;
+  max-width: 640px;
+  background-color: white;
+}
+.popup-inner .close-btn{
+  position:absolute;
+  top: 16px;
+  right: 16px;
+  background-color: grey;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.login-btn{
+  background-color: #13d326;
+  border-radius: 1rem;
+  font-weight: bold;
+}

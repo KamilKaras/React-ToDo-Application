@@ -70,7 +70,7 @@ class ToDoList extends React.Component {
       const actualMonth = (newData.getMonth()+1).toString().padStart(2,"0")
       const actualDay = newData.getDate()
       const actualHour = newData.getHours()
-      const actualMin = newData.getMinutes()
+      const actualMin = (newData.getMinutes()).toString().padStart(2,"0")
       this.props.user.modify = actualDay+"."+actualMonth+ ", " + actualHour+":"+actualMin;
   }
 }

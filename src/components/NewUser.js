@@ -5,7 +5,7 @@ class NewUser extends React.Component {
     render(){
         return(
             <div key={this.props.user.id} className="one-user">
-                <div className="user-open" onClick={() =>this.props.whoIsLogged(this.props.user.id)}>
+                <div className="user-open" onClick={() =>this.props.userToLogin(this.props.user.id)}>
                     <div className="avatar"></div>
                     <div className="user-data">
                         <p className="user-title">Name</p>
@@ -29,12 +29,6 @@ class NewUser extends React.Component {
                         <div className="user-data">
                             <p className="user-title">Last task modify</p>
                             <p className="user-value">{this.props.user.modify}</p>
-                        </div>
-                    </div>
-                    <div className="user">
-                        <div className="user-data">
-                            <p className="user-title">Status</p>
-                            <p className="user-value-status">{this.props.user.status}</p>
                         </div>
                     </div>
                 </div>

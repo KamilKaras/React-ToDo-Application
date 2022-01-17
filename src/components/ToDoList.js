@@ -2,26 +2,31 @@ import React from "react";
 import Menu from "./Menu";
 import UserList from "./UserList";
 import TaskList from "./TasksList";
+import Popup from "./Popup";
 
 class ToDoList extends React.Component {
     constructor(props){
     super(props)
-
     this.state ={
       userList:[],
-      visible:true,
-      userToVisible:0
+      visibleList:true,
+      userToLogin:"",
+      popupVisible: false,
+      loggedUserId:0
     }
       
     }
     render(){
       return (
         <div className="container">
+          <Popup trigger={this.state.popupVisible} closePopup = {this.ClosePopup.bind(this)} userList = {this.state.userList}
+          userToLogin ={this.state.userToLogin} whoIsLogged = {this.WhoIsLogged.bind(this)}/>
           <Menu userList = {this.state.userList} parentCallback={this.ChildCallbackAdd.bind(this)} showUsers = {this.ShowUsers.bind(this)}/>
-          {this.state.visible ?
-            <UserList userList = {this.state.userList} parentCallback={this.ChildCallbackList.bind(this)} parentCallbackWhoLogged = {this.WhoLogged.bind(this)}/>
+          {this.state.visibleList ?
+            <UserList userList = {this.state.userList} parentCallback={this.ChildCallbackList.bind(this)} UserToLogin = {this.UserToLogin.bind(this)}
+            showPopup ={this.ShowPopup.bind(this)}/>
             :
-            this.state.userList.filter(user => user.id === this.state.userToVisible).map(user => {
+            this.state.userList.filter(user => user.id === this.state.loggedUserId).map(user => {
               return(
                 <TaskList key ={user.id} user={user} userList ={this.state.userList}/>
               )
@@ -42,15 +47,32 @@ class ToDoList extends React.Component {
          userList, 
       })
     }
-    WhoLogged(childData,showList){
+    UserToLogin(childData){
+      this.ShowPopup()
       this.setState({
-        userToVisible:childData,
-        visible:showList
+        userToLogin:childData,
       })
     }
+    WhoIsLogged(childData){
+      this.setState({
+        loggedUserId:childData,
+        visibleList:false,
+        popupVisible:false
+      })
+    } 
     ShowUsers(childData){
       this.setState({
-        visible:childData
+        visibleList:childData
+      })
+    }
+    ShowPopup(){
+      this.setState({
+        popupVisible:true
+      })
+    }
+    ClosePopup(){
+      this.setState({
+        popupVisible:false
       })
     } 
 }   

@@ -12,7 +12,7 @@ class UserList extends React.Component{
                         <NewUser key={user.id}
                          user={user}
                          deleteUser = {this.DeleteUser.bind(this)}
-                         whoIsLogged = {this.WhoIsLogged.bind(this)}
+                         userToLogin = {this.UserToLogin.bind(this)}
                          />
                     )
                 })}
@@ -23,9 +23,9 @@ class UserList extends React.Component{
         const refreshList = this.props.userList.filter(user => user.id !== userId)
         this.props.parentCallback(refreshList)
     }
-    WhoIsLogged(logged){
-        const showList = false;
-        this.props.parentCallbackWhoLogged(logged,showList)
+    UserToLogin(toLogin){
+        const userToLogin = this.props.userList.filter(user => user.id === toLogin) 
+        this.props.UserToLogin(userToLogin)
     }
 }
 
