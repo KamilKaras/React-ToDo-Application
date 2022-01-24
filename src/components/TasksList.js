@@ -27,7 +27,7 @@ class ToDoList extends React.Component {
               <div className="tasks">
                 {this.state.tasks.map(task =>{
                   return(
-                    <ToDoItem task = {task} key={task.id} deleteItem={this.DeleteItem.bind(this)}/>
+                    <ToDoItem task = {task} key={task.id} deleteItem={this.DeleteItem.bind(this)} isCompleted={this.IsComplited.bind(this)}/>
                   )
                 })}
               </div>
@@ -47,7 +47,8 @@ class ToDoList extends React.Component {
       else{
         const newTask = {
           id: 1 + Math.random(),
-          desc: this.state.newTask
+          desc: this.state.newTask,
+          isCompleted:false
         };
         this.props.user.tasks.push(newTask);
         this.Modify();
@@ -65,13 +66,27 @@ class ToDoList extends React.Component {
       this.props.user.tasks = filtredTasksList;
       this.Modify();
     }
+    IsComplited(itemId){
+      const list = [...this.props.user.tasks];
+      const refreshList = list.map(item =>{
+        if(item.id === itemId) {
+          return{...item, isCompleted: !item.isCompleted}
+        }
+        return item;
+      })
+      this.setState({
+        tasks:refreshList
+      })
+      this.props.user.tasks = refreshList;
+      this.Modify();
+    }
     Modify(){
       const newData = new Date();
       const actualMonth = (newData.getMonth()+1).toString().padStart(2,"0")
       const actualDay = newData.getDate()
       const actualHour = newData.getHours()
       const actualMin = (newData.getMinutes()).toString().padStart(2,"0")
-      this.props.user.modify = actualDay+"."+actualMonth+ ", " + actualHour+":"+actualMin;
+      this.props.user.modify = actualDay + "." + actualMonth + ", " + actualHour + ":" + actualMin;
   }
 }
 
