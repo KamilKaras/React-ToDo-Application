@@ -9,7 +9,7 @@ class NewUser extends React.Component {
                     <div className="avatar"></div>
                     <div className="user-data">
                         <p className="user-title">Name</p>
-                        <p className="user-value">{this.props.user.name}</p>
+                        <p className="user-value">{this.props.user.userName}</p>
                     </div>
                 </div>
                 <div className="account">

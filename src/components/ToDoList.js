@@ -34,12 +34,8 @@ class ToDoList extends React.Component {
         </div>
       );
     }
-    ChildCallbackAdd(childData){
-      const userList = [...this.state.userList]
-      userList.push(childData)
-      this.setState({
-         userList, 
-      })
+    ChildCallbackAdd(user){
+      this.UserRegistration(user.email, user.password, user.name)
     }
     ChildCallbackList(childData){
       const userList = childData;
@@ -75,32 +71,57 @@ class ToDoList extends React.Component {
         popupVisible:false
       })
     } 
-    apiUserLogin(email, password) {
+    UserRegistration(email, password, login) {
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
                 email: email,
-                password: password
+                password: password,
+                login:login
              })
       };
-      fetch('https://localhost:44366/Auth/Login', requestOptions)
+      fetch('https://localhost:44366/Auth/Register', requestOptions)
           .then(async response => {
               const isJson = response.headers.get('content-type')?.includes('application/json');
               const data = isJson && await response.json();
-                console.log(data)
             
               if (!response.ok) {
                   const error = (data && data.message) || response.status;
                   return Promise.reject(error);
               }
-
+              this.GetAllUsers()
           })
           .catch(error => {
               this.setState({ errorMessage: error.toString() });
+              console.log(error.toString())
               alert('There was an error!', error);
           });
+         
     }
+    GetAllUsers(){
+      fetch('https://localhost:44366/Users/GetAllUsers')
+      .then(async response => {
+          const data = await response.json();
+
+          if (!response.ok) {
+              const error = (data && data.message) || response.statusText;
+              return Promise.reject(error);
+          }
+
+          this.setState({ 
+            userList:data
+            })
+      })
+      .catch(error => {
+          this.setState({ errorMessage: error.toString() });
+          console.error('There was an error!', error);
+      });
+    }
+    componentDidMount() {
+      this.GetAllUsers()
+      
+  }
 }   
     
 
