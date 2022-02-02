@@ -22,7 +22,7 @@ class Menu extends React.Component{
                 </div>
                 <AddUser addUserVisible ={this.state.newUserVisi} newUserCreated={this.NewUserCreated.bind(this)} changeVisibility={this.ChangeVisibility.bind(this)}/>
                 <div className="menu-list">
-                    <button className="button-menu" onClick={() => this.props.showUsers(true)}>User List</button>
+                    <button className="button-menu" onClick={() => this.props.showUsers(1)}>User List</button>
                     <button className="button-menu">Calendar</button>
                     <button className="button-menu">Tasks</button>
                 </div>

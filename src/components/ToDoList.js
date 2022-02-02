@@ -12,7 +12,7 @@ class ToDoList extends React.Component {
       visibleList:true,
       userToLogin:"",
       popupVisible: false,
-      loggedUserId:0
+      loggedUserId:0,
     }
       
     }
@@ -75,6 +75,32 @@ class ToDoList extends React.Component {
         popupVisible:false
       })
     } 
+    apiUserLogin(email, password) {
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+                email: email,
+                password: password
+             })
+      };
+      fetch('https://localhost:44366/Auth/Login', requestOptions)
+          .then(async response => {
+              const isJson = response.headers.get('content-type')?.includes('application/json');
+              const data = isJson && await response.json();
+                console.log(data)
+            
+              if (!response.ok) {
+                  const error = (data && data.message) || response.status;
+                  return Promise.reject(error);
+              }
+
+          })
+          .catch(error => {
+              this.setState({ errorMessage: error.toString() });
+              alert('There was an error!', error);
+          });
+    }
 }   
     
 

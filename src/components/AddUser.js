@@ -1,8 +1,8 @@
 import React from "react";
 import Forms from "./Forms"
 
+
 class AddUser extends React.Component{
-    
 
     render (){
         return(
@@ -11,9 +11,10 @@ class AddUser extends React.Component{
         </div>
         )
     }
+
     AddUser(newUserForm){
         const newUser = this.createUser(newUserForm);
-        this.props.newUserCreated(newUser);
+        this.props.newUserCreated(newUser)
         this.props.changeVisibility("new-user-on");
     }
     
@@ -30,6 +31,7 @@ class AddUser extends React.Component{
             }
         return newUser;
     }
+
     GetData(){
         const newData = new Date();
         const actualYear = newData.getFullYear()
@@ -37,5 +39,33 @@ class AddUser extends React.Component{
         const actualDay = newData.getDate()
         return actualYear+"-"+actualMonth+"-"+actualDay;
     }
+    apiUserRegistration(newUser) {
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+                login: newUser.name,
+                email: newUser.email,
+                password: newUser.password
+             })
+      };
+      fetch('https://localhost:44366/Auth/Register', requestOptions)
+          .then(async response => {
+              const isJson = response.headers.get('content-type')?.includes('application/json');
+              const data = isJson && await response.json();
+                console.log(data)
+            
+              if (!response.ok) {
+                  const error = (data && data.message) || response.status;
+                  return Promise.reject(error);
+              }
+
+          })
+          .catch(error => {
+              this.setState({ errorMessage: error.toString() });
+              alert('There was an error!', error);
+          });
+    }
 }
+
 export default AddUser;
