@@ -101,7 +101,7 @@ const SignupForm = (props) => {
         <div className='form-desc'>{formik.errors.repPassword}</div>
       ) : null}
 
-      <button type="submit" className="button">Submit</button>
+      <button type="submit" className="button-submit">Submit</button>
     </form>
   );
 };

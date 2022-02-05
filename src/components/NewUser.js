@@ -28,12 +28,20 @@ class NewUser extends React.Component {
                     <div className="user">
                         <div className="user-data">
                             <p className="user-title">Last task modify</p>
-                            <p className="user-value">{this.props.user.modify}</p>
+                            <p className="user-value">{this.props.user.modified}</p>
+                        </div>
+                    </div>
+                    <div className="user">
+                        <div className="user-data">
+                            <p className="user-title">Status</p>
+                            <p className="user-value-status">Online</p>
                         </div>
                     </div>
                 </div>
-                <button className="button" onClick={()=>this.props.deleteUser(this.props.user.id)}>Delete</button>
-            </div>
+                <div className="buttons">
+                    <button className="button-user" onClick={()=>this.props.deleteUser(this.props.user.id)}>Delete</button>
+                </div>                    
+                </div>
         )
     }
 } 

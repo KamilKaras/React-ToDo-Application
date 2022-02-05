@@ -70,7 +70,7 @@ const SignupForm = (props) => {
             <div className='form-desc'>{formik.errors.password}</div>
         ) : null}
             <button className="close-btn" onClick={() => props.closePopup()}>X</button>
-            <button type="submit" className="button">Submit</button>
+            <button type="submit" className="button-submit">Submit</button>
         </div>
     </form>
   ):"";

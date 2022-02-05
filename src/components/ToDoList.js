@@ -13,6 +13,7 @@ class ToDoList extends React.Component {
       userToLogin:"",
       popupVisible: false,
       loggedUserId:0,
+      errorMessage:""
     }
       
     }
@@ -65,6 +66,7 @@ class ToDoList extends React.Component {
         popupVisible:false
       })
     } 
+
     UserRegistration(email, password, login) {
       const requestOptions = {
           method: 'POST',
@@ -81,18 +83,17 @@ class ToDoList extends React.Component {
               const data = isJson && await response.json();
             
               if (!response.ok) {
-                  const error = (data && data.message) || response.status;
+                  const error = data
                   return Promise.reject(error);
               }
               this.GetAllUsers()
           })
           .catch(error => {
-              this.setState({ errorMessage: error.toString() });
-              console.log(error.toString())
-              alert('There was an error!', error);
+              alert(error.errors);
           });
          
     }
+
     GetAllUsers(){
       fetch('https://localhost:44366/Users/GetAllUsers?page=1&count=10')
       .then(async response => {
@@ -109,9 +110,10 @@ class ToDoList extends React.Component {
       })
       .catch(error => {
           this.setState({ errorMessage: error.toString() });
-          console.error('There was an error!', error);
+          alert("Server doesn't respond",error);
       });
     }
+
     DeleteUser(userToDelete){
       fetch(`https://localhost:44366/Users/${userToDelete.map(user => user.id)}`,{
         method:"DELETE"
@@ -121,16 +123,17 @@ class ToDoList extends React.Component {
 
         // check for error response
         if (!response.ok) {
-            // get error message from body or default to response status
             const error = (data && data.message) || response.status;
             return Promise.reject(error);
+            
         }
         this.GetAllUsers()
     })
     .catch(error => {
-        console.error('There was an error!', error);
+        alert("Server doesn't respond", error);
     });
     }
+
     componentDidMount() {
       this.GetAllUsers()
     }
