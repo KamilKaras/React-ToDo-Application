@@ -20,8 +20,8 @@ class UserList extends React.Component{
         )
     }
     DeleteUser(userId){
-        const refreshList = this.props.userList.filter(user => user.id !== userId)
-        this.props.parentCallback(refreshList)
+        const userToDelete = this.props.userList.filter(user => user.id === userId)
+        this.props.DeleteUser(userToDelete)
     }
     UserToLogin(toLogin){
         const userToLogin = this.props.userList.filter(user => user.id === toLogin) 

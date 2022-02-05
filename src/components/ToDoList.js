@@ -23,7 +23,7 @@ class ToDoList extends React.Component {
           userToLogin ={this.state.userToLogin} whoIsLogged = {this.WhoIsLogged.bind(this)}/>
           <Menu userList = {this.state.userList} parentCallback={this.ChildCallbackAdd.bind(this)} showUsers = {this.ShowUsers.bind(this)}/>
           {this.state.visibleList ?
-            <UserList userList = {this.state.userList} parentCallback={this.ChildCallbackList.bind(this)} UserToLogin = {this.UserToLogin.bind(this)}
+            <UserList userList = {this.state.userList} DeleteUser={this.DeleteUser.bind(this)} UserToLogin = {this.UserToLogin.bind(this)}
             showPopup ={this.ShowPopup.bind(this)}/>
             :
             this.state.userList.filter(user => user.id === this.state.loggedUserId).map(user => {
@@ -36,12 +36,6 @@ class ToDoList extends React.Component {
     }
     ChildCallbackAdd(user){
       this.UserRegistration(user.email, user.password, user.name)
-    }
-    ChildCallbackList(childData){
-      const userList = childData;
-      this.setState({
-         userList, 
-      })
     }
     UserToLogin(childData){
       this.ShowPopup()
@@ -100,7 +94,7 @@ class ToDoList extends React.Component {
          
     }
     GetAllUsers(){
-      fetch('https://localhost:44366/Users/GetAllUsers')
+      fetch('https://localhost:44366/Users/GetAllUsers?page=1&count=10')
       .then(async response => {
           const data = await response.json();
 
@@ -118,10 +112,28 @@ class ToDoList extends React.Component {
           console.error('There was an error!', error);
       });
     }
+    DeleteUser(userToDelete){
+      fetch(`https://localhost:44366/Users/${userToDelete.map(user => user.id)}`,{
+        method:"DELETE"
+      })
+      .then(async response => {
+        const data = await response.json();
+
+        // check for error response
+        if (!response.ok) {
+            // get error message from body or default to response status
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
+        }
+        this.GetAllUsers()
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+    }
     componentDidMount() {
       this.GetAllUsers()
-      
-  }
+    }
 }   
     
 
