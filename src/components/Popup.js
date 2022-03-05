@@ -26,16 +26,11 @@ const SignupForm = (props) => {
     },
     validate,
     onSubmit: values => {  
+        props.userLogin(values.email, values.password)
         props.userToLogin.map(user =>
-            user.email !== values.email.toLocaleLowerCase() ?
-                alert("Wrong user email adress !! ")
-            :user.password !== values.password ?
-                alert("Wrong user password !! ")
-            :
-                props.whoIsLogged(user.id),
-            )
-            values.email='';
-            values.password='';
+        props.whoIsLogged(user.id))
+        values.email='';
+        values.password='';
     }
   });
 

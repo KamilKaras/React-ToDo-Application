@@ -92,6 +92,8 @@
 .account{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+
 }
 .user-data{
   margin: 0 2rem;

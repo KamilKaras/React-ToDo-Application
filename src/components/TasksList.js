@@ -1,13 +1,13 @@
 import React from "react";
-import ToDoItem from "./ToDoItem"
+import ToDoItem from "./ToDoItem";
+import configData from "./config.json";
 
 class ToDoList extends React.Component {
     constructor(props){
     super(props)
   
       this.state={
-        newTask:"",
-        tasks:this.props.user.tasks,
+        newTask:""
       }
     }
     render(){
@@ -25,9 +25,9 @@ class ToDoList extends React.Component {
                 <button className="button" onClick={this.AddNewTask.bind(this)}>Add task</button>
               </div>
               <div className="tasks">
-                {this.state.tasks.map(task =>{
+                {this.props.tasks.map(task => {
                   return(
-                    <ToDoItem task = {task} key={task.id} deleteItem={this.DeleteItem.bind(this)} isCompleted={this.IsComplited.bind(this)}/>
+                    <ToDoItem task = {task} key={task.id} deleteItem={this.DeleteItem.bind(this)} isComplited={this.IsComplited.bind(this)}/>
                   )
                 })}
               </div>
@@ -40,54 +40,73 @@ class ToDoList extends React.Component {
         [key]: value
       })
     }
+    
     AddNewTask(){
       if(this.state.newTask === ""){
         alert("Write something in input field");
       }
       else{
-        const newTask = {
-          id: 1 + Math.random(),
-          desc: this.state.newTask,
-          isCompleted:false
-        };
-        this.props.user.tasks.push(newTask);
-        this.Modify();
+        const requestOptions ={
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+              title:"Tytuł",
+              description:this.state.newTask
+          })
+        }
+        fetch(`${configData.SERVER_URL}ToDo`, requestOptions)
+          .then(async response => {
+            const data = await response.json();
+            
+            if(!response.ok){
+              const errorMessage = data;
+              return Promise.reject(errorMessage)
+            }
+            this.props.getUserTasks()            
+          })
+        .catch(errorMessage => {
+            alert(errorMessage)
+        })
         this.setState({
           newTask: ""
         })
       }
     }
-    DeleteItem(itemId){
-      const list = [...this.props.user.tasks];
-      const filtredTasksList = list.filter(task => task.id !== itemId);
-      this.setState({
-        tasks:filtredTasksList
+
+    DeleteItem(task){
+        fetch(`${configData.SERVER_URL}ToDo/${task.id}`,{
+            method:"DELETE"
+        })
+            .then(async response => {
+                const data = await response.json();
+  
+                if (!response.ok) {
+                  const error = (data && data.message) || response.status;
+                  return Promise.reject(error);
+                }
+                this.props.getUserTasks()     
       })
-      this.props.user.tasks = filtredTasksList;
-      this.Modify();
+            .catch(error => {
+                alert("Server doesn't respond", error);
+            });
+      }
+
+    IsComplited(task){
+
+      const requestOptions ={
+        method: 'PUT',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            id: `${task.id}`,
+            title: "Tytuł",
+            description: task.description,
+            isComplited: true
+        })
+      };
+
+      fetch(`${configData.SERVER_URL}ToDo/${task.id}`, requestOptions)
+        this.props.getUserTasks()
     }
-    IsComplited(itemId){
-      const list = [...this.props.user.tasks];
-      const refreshList = list.map(item =>{
-        if(item.id === itemId) {
-          return{...item, isCompleted: !item.isCompleted}
-        }
-        return item;
-      })
-      this.setState({
-        tasks:refreshList
-      })
-      this.props.user.tasks = refreshList;
-      this.Modify();
-    }
-    Modify(){
-      const newData = new Date();
-      const actualMonth = (newData.getMonth()+1).toString().padStart(2,"0")
-      const actualDay = newData.getDate()
-      const actualHour = newData.getHours()
-      const actualMin = (newData.getMinutes()).toString().padStart(2,"0")
-      this.props.user.modify = actualDay + "." + actualMonth + ", " + actualHour + ":" + actualMin;
-  }
 }
 
 export default ToDoList;

@@ -41,7 +41,7 @@ class NewUser extends React.Component {
                 <div className="buttons">
                     <button className="button-user" onClick={()=>this.props.deleteUser(this.props.user.id)}>Delete</button>
                 </div>                    
-                </div>
+            </div>
         )
     }
 } 
