@@ -29,6 +29,8 @@ const SignupForm = (props) => {
         props.userLogin(values.email, values.password)
         props.userToLogin.map(user =>
         props.whoIsLogged(user.id))
+        props.userToLogin.map(user =>
+        props.getUserTasks(user.id))
         values.email='';
         values.password='';
     }

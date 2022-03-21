@@ -22,7 +22,8 @@ class ToDoList extends React.Component {
       return (
         <div className="container">
           <Popup trigger={this.state.popupVisible} closePopup = {this.ClosePopup.bind(this)} userList = {this.state.userList}
-          userToLogin ={this.state.userToLogin} whoIsLogged = {this.WhoIsLogged.bind(this)} userLogin = {this.UserLogin.bind(this)} />
+          userToLogin ={this.state.userToLogin} whoIsLogged = {this.WhoIsLogged.bind(this)} userLogin = {this.UserLogin.bind(this)}
+          getUserTasks = {this.GetUserTasks.bind(this)}/>
           <Menu userList = {this.state.userList} parentCallback={this.ChildCallbackAdd.bind(this)} showUsers = {this.ShowUsers.bind(this)}/>
           {this.state.visibleList ?
             <UserList userList = {this.state.userList} DeleteUser={this.DeleteUser.bind(this)} UserToLogin = {this.UserToLogin.bind(this)}
@@ -134,7 +135,6 @@ class ToDoList extends React.Component {
 
     componentDidMount() {
         this.GetAllUsers()
-        this.GetUserTasks()
     }
 
     UserLogin(email, password){
@@ -159,7 +159,6 @@ class ToDoList extends React.Component {
               this.setState({
                 visibleList:false,
               })
-              console.log(data)
           })
 
           .catch(errorMessage => {
@@ -167,8 +166,8 @@ class ToDoList extends React.Component {
         })
     }
     
-    GetUserTasks(){
-        fetch(`${configData.SERVER_URL}ToDo?page=1&count=10`)
+    GetUserTasks(userId){
+        fetch(`${configData.SERVER_URL}ToDo?page=1&count=10&userId=${userId}`)
           .then(async response => {
             const data = await response.json();
 

@@ -51,7 +51,8 @@ class ToDoList extends React.Component {
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
               title:"Tytuł",
-              description:this.state.newTask
+              description:this.state.newTask,
+              userId: this.props.user.id
           })
         }
         fetch(`${configData.SERVER_URL}ToDo`, requestOptions)
@@ -62,7 +63,7 @@ class ToDoList extends React.Component {
               const errorMessage = data;
               return Promise.reject(errorMessage)
             }
-            this.props.getUserTasks()            
+            this.props.getUserTasks(this.props.user.id)            
           })
         .catch(errorMessage => {
             alert(errorMessage)
@@ -84,7 +85,7 @@ class ToDoList extends React.Component {
                   const error = (data && data.message) || response.status;
                   return Promise.reject(error);
                 }
-                this.props.getUserTasks()     
+                this.props.getUserTasks(this.props.user.id)     
       })
             .catch(error => {
                 alert("Server doesn't respond", error);
